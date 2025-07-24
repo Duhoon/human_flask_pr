@@ -4,222 +4,134 @@
   <meta charset="UTF-8">
   <title>운동 이력 & 마이페이지</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-      font-family: sans-serif;
-      background-color: #777;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      background: #fff;
-    }
-
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 15px;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      font-weight: bold;
-      border-bottom: 2px solid black;
-    }
-
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border: 1px solid #eee;
-      border-radius: 10px;
-      background: #f9f9f9;
-      margin-bottom: 20px;
-    }
-
-    .profile img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-right: 15px;
-    }
-
-    .inputs {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-    }
-
-    .inputs div {
-      text-align: center;
-    }
-
-    .inputs input {
-      margin-top: 5px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      width: 100px;
-      text-align: center;
-    }
-
-    .graph-section {
-      flex: 1;
-      height: 300px;
-      background-color: #aaa;
-      border-radius: 10px;
-      position: relative;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-    }
-
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 30px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .arrow.left {
-      left: 10px;
-    }
-
-    .arrow.right {
-      right: 10px;
-    }
-
-      .buttons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-      gap: 15px;
-    }
-
-    .buttons button {
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .buttons .reset {
-      background: white;
-      border: 1px solid black;
-    }
-
-    .buttons .save {
-      background: black;
-      color: white;
-      border: none;
-    }
-
-    .log-entry {
-      border-top: 1px solid #ccc;
-      padding: 10px 0;
-    }
-
-    .log-date {
-      color: gray;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .log-type {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .log-details {
-      display: flex;
-      gap: 10px;
-    }
-
-    .log-box {
-      flex: 1;
-      height: 40px;
-      background-color: #ccc;
-      border-radius: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/swiper.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/apexcharts.css') }}">
 </head>
 <body>
   <div class="container">
-    {% if record %}
     <div class="tabs">
-      <div class="tab active">My</div>
-      <div class="tab">Work out</div>
+      <a class="tab active" href="/exercise/mypage">My</a>
+      <a class="tab" href="/exercise/workout">Work out</a>
     </div>
 
     <div class="content">
       <div class="profile">
-        <img src="https://via.placeholder.com/60" alt="Profile">
+        <img src="https://placehold.co/60" alt="Profile">
         <div><strong>{{ record.email }}</strong></div>
       </div>
 
-      <div class="inputs">
-        <div>
-          <label>Height</label><br>
-          <input type="text" value="{{ record.heigth }}">
+      <form>
+        <div class="inputs">
+          <div>
+            <label>Height</label><br>
+            <input type="text" value="{{ record.heigth }}">
+          </div>
+          <div>
+            <label>Weight</label><br>
+            <input type="text"  value="{{ record.weigth }}">
+          </div>
         </div>
-        <div>
-          <label>Weight</label><br>
-          <input type="text"  value="{{ record.weigth }}">
+        <div class="buttons">
+          <button class="reset">Reset</button>
+          <button class="save">Save</button>
         </div>
-      </div>
+      </form>
 
       <div class="graph-section">
-        <div class="arrow left">&#10094;</div>
-        그래프1
-        <div class="arrow right">&#10095;</div>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><div id="chart"></div></div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </div>
     </div>
-
-<div class="buttons">
-        <button class="reset">Reset</button>
-        <button class="save">Save</button>
-      </div>
       <!-- 운동 기록 리스트 -->
     {% for record in record %}
         <div class="log-entry">
             <div class="log-date">{{ record.created_at }}</div>
             <div class="log-type">{{record.exercise_type}}</div>
             <div class="log-details">
-            <div class="log-box">{{ record.REPS }}</div>
-            <div class="log-box">{{ record.set_num }}</div>
+              <div class="log-box">{{ record.set_num }} Set</div>
+              <div class="log-box">{{ record.REPS }} REP</div>
             </div>
         </div>
     {% endfor %}
     </div>
   </div>
-
   </div>
-
-    
 </body>
+<script type="text/javascript" src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
+<script type="text/javascript">
+  const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'vertical',
+    loop: true,
+
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    }
+  });
+</script>
+<script type="text/javascript">
+  var options = {
+    series: [{
+      name: "Desktops",
+      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+  }],
+    chart: {
+    height: 300,
+    type: 'line',
+    zoom: {
+      enabled: false
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'straight'
+  },
+  title: {
+    text: 'Product Trends by Month',
+    align: 'left'
+  },
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+      opacity: 0.5
+    },
+  },
+  xaxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+  }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+</script>
 </html>
