@@ -24,6 +24,33 @@ class Database:
             print(f"MariaDB 연결 중 오류 발생: {e}")
     
     # TODO: DB 컨넥션 및 Model 관련 작업 필요
+    def get_mypage(self, id):
+        self.id = id
+        """마이페이지 조회"""
+        try:
+            if self.connection is None:
+                print("데이터베이스 연결이 없습니다.")
+                return False
+                
+            with self.connection.cursor() as cursor:
+                query = """
+                    SELECT 
+                        ID
+                        , password 
+                        , HEIGHT
+                        , WEIGHT
+                        , CREATED_AT
+                        , UPDATED_AT
+                    FROM USER
+                    WHERE ID = %s
+                """
+                cursor.execute(query, (id,))
+                record = cursor.fetchall()
+            return record
+        except Error as e:
+            print(f"데이터 조회 중 오류 발생: {e}")
+            return False
+    
     
     def close(self):
         # 데이터베이스 연결 종료

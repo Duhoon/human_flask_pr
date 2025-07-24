@@ -179,17 +179,17 @@
     <div class="content">
       <div class="profile">
         <img src="https://via.placeholder.com/60" alt="Profile">
-        <div><strong>{{ record.userName }}</strong></div>
+        <div><strong>{{ record.id }}</strong></div>
       </div>
 
       <div class="inputs">
         <div>
           <label>Height</label><br>
-          <input type="text" placeholder="Value">
+          <input type="text" value="{{ record.heigth }}">
         </div>
         <div>
           <label>Weight</label><br>
-          <input type="text" placeholder="Value">
+          <input type="text"  value="{{ record.weigth }}">
         </div>
       </div>
 
