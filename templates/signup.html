@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Register</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
 </head>
 <body>
-  <form class="register-form" method="POST" action="/SignUp">
+  <form class="register-form" method="POST" action="/auth/signup">
     <div class="form-group">
       <label for="email">Email</label>
       <input type="email" id="email" name="email" placeholder="Value" required />
@@ -33,7 +34,8 @@ You agree to our privacy policy and user agreement.
         <div class="checkbox-desc">Description</div>
       </div>
     </div>
-    <button type="submit">Register</button>  
+    <button class="button btn-primary" type="submit">Register</button>  
+    <a class="button btn-secondary" href="/auth/login">Back</button>
 </form>
 
 <div>
