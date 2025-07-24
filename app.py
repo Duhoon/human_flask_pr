@@ -30,7 +30,6 @@ def login():
 #     # GET 요청 시 로그인 폼 보여주기
 #     return render_template('login.html')
 
-<<<<<<< HEAD
 # @app.route("/DashBoard")
 # def DashBoard():
 #     return render_template('DashBoard.html')
@@ -52,7 +51,6 @@ def SignUp(): # 회원가입
             print(result_message)
             return render_template("signup.html",result_message=result_message)
     return render_template('signup.html')
-=======
 @app.route('/workout')
 def workout():
     # 마이페이지 조회
@@ -62,4 +60,3 @@ def workout():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
->>>>>>> a7a977ba123b107e08f09636ff084048e84d45f5
