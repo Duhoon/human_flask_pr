@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <form class="register-form" method="POST" action="/SignUp">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Value" required />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Value" required />
+    </div>
+
+    <div class="form-group">
+      <label for="terms">Terms & Service</label>
+      <textarea id="terms" readonly>
+Please read and accept the terms and service before registering.
+You agree to our privacy policy and user agreement.
+      </textarea>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="agree" name="agree"/>
+      <div>
+        <label for="agree" class="checkbox-text">Agree this term</label>
+        <div class="checkbox-desc">Description</div>
+      </div>
+    </div>
+    <button type="submit">Register</button>  
+</form>
+
+<div>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-popup">
+        {% for message in messages %}
+          <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+</body>
+</html>
