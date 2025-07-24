@@ -79,14 +79,22 @@ class Database:
             with self.connection.cursor() as cursor:
                 query = """
                     SELECT 
-                        ID
-                        , password 
-                        , HEIGHT
-                        , WEIGHT
-                        , CREATED_AT
-                        , UPDATED_AT
-                    FROM USER
-                    WHERE ID = %s
+                        A.ID
+                        , A.password 
+                        , A.HEIGHT
+                        , A.WEIGHT
+                        , DATE_FORMAT(A.CREATED_AT, '%Y-%m-%d')AS CREATED_AT
+	                    , DATE_FORMAT(A.UPDATED_AT, '%Y-%m-%d')AS UPDATED_AT
+                        , A.EMAIL
+                        , B.exercise_type 
+                        , B.created_at 
+                        , B.USER_ID
+                        , B.set_num 
+                        , B.REPS 
+                    FROM USER A
+                    LEFT JOIN exercise B
+                        ON A.ID = B.user_id
+                    WHERE A.ID = %s
                 """
                 cursor.execute(query, (id,))
                 record = cursor.fetchall()
