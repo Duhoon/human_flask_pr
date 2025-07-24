@@ -9,7 +9,7 @@ load_dotenv() # .env 파일 환경설정 불러오기
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
-@app.route('')
+@app.route('/')
 def index():
     return render_template('login.html')
 
