@@ -1,9 +1,13 @@
 # Flask Project
+
+# 환경변수 설정 관련
+
+
 # 데이터 타입
 
 ## User Table
 ```bash
-- id : 유저 Primary Key 값
+- id: 유저 Primary Key 값
 - email: email 값
 - password: 비밀번호
 - height: 신장
@@ -13,11 +17,11 @@
 - updated_at: 유저 정보 수정 날짜
 ```
 
-## Record Table
+## Exercise Table
 ```bash
 - id : 레코드 Primary Key 값
 - user_id : user 테이블 foreign Key 값
-- exercise_type : 운동 타입("pullup", "pushup", "situp", "squat")
+- exercise_type: 운동 타입("pullup", "pushup", "situp", "squat")
 - set_num: 세트 수
 - reps: 1 세트 당 운동 반복 수
 - created_at: 기록 생성 날짜
