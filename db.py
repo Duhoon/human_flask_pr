@@ -45,6 +45,31 @@ class Database:
             print(f"기록 저장 중 오류 발생: {e}")
             return False
         
+    def get_record(self, user_id):
+        try:
+            if self.connection is None:
+                print("Not connected.")
+                return False
+            
+            with self.connection.cursor() as cursor:
+                # 사용자 정보 조회
+                cursor.execute("SELECT name, height, weight FROM USER WHERE user_id = %s",
+                               (user_id,))
+                user = cursor.fetchall()
+                
+                # 운동 기록 조회
+                query = """
+                SELECT * FROM EXERCISE
+                WHERE user_id = %s
+                ORDER BY created_at DESC
+                LIMIT %s                
+                """
+                cursor.execute(query, (user_id,))
+                exercise = cursor.fetchall()
+                
+        except Error as e:
+            print(f"기록 저장 중 오류 발생: {e}")
+            return False
         
         
     def close(self):
