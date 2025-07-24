@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# TODO: Router 및 Controller 구현 필요 
-
-=======
 from flask import Flask, render_template, request, redirect, url_for
 from db import Database
 import atexit
@@ -15,4 +11,3 @@ atexit.register(db.close)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
->>>>>>> 34c7056e1f6d55c3b16928a76816d541bd3edbb7
