@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>운동 기록 입력</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 1rem;
+            background: #fff;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .tabs a {
+            padding: 1rem;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .tabs a.active {
+            border-bottom: 2px solid #000;
+            color: #000;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        select, input {
+            padding: 0.7rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .button-group button {
+            flex: 1;
+            padding: 0.7rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: none;
+        }
+
+        .reset-btn {
+            background-color: #fff;
+            border: 1px solid #000;
+            color: #000;
+        }
+
+        .save-btn {
+            background-color: #222;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <a href="/mypage">My</a>
+        <a href="/workout" class="active">Work out</a>
+    </div>
+
+    <form action="/workout/save" method="post">
+        <div>
+            <label for="type">Type</label>
+            <select id="type" name="type" required>
+                <option value="">Value</option>
+                <option value="pushup">Push-up</option>
+                <option value="situp">Sit-up</option>
+                <option value="pullup">Pull-up</option>
+                <option value="squat">Squat</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="set">Set</label>
+            <input type="number" name="set" id="set" placeholder="Value" required>
+        </div>
+
+        <div>
+            <label for="rep">Rep</label>
+            <input type="number" name="rep" id="rep" placeholder="Value" required>
+        </div>
+
+        <div class="button-group">
+            <button type="reset" class="reset-btn">Reset</button>
+            <button type="submit" class="save-btn">Save</button>
+        </div>
+    </form>
+</body>
+</html>
