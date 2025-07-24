@@ -68,7 +68,81 @@ class Database:
         except Error as e:
             print(f"로그인 실패했습니다. {e}")
             return None
+    def get_mypage(self, id):
+        self.id = id
+        """마이페이지 조회"""
+        try:
+            if self.connection is None:
+                print("데이터베이스 연결이 없습니다.")
+                return False
+                
+            with self.connection.cursor() as cursor:
+                query = """
+                    SELECT 
+                        ID
+                        , password 
+                        , HEIGHT
+                        , WEIGHT
+                        , CREATED_AT
+                        , UPDATED_AT
+                    FROM USER
+                    WHERE ID = %s
+                """
+                cursor.execute(query, (id,))
+                record = cursor.fetchall()
+            return record
+        except Error as e:
+            print(f"데이터 조회 중 오류 발생: {e}")
+            return False
     
+    
+    def save_exer_record(self, weight, exercise_type, set_num, rep):
+        try:
+            if self.connection is None:
+                print("Not connected.")
+                return False
+            
+            with self.connection.cursor() as cursor:
+                query = """
+                INSERT INTO EXERCISE (exercise_type, set_num, reps)
+                VALUES (%s, %s, %s)
+                """
+                cursor.execute(query, (exercise_type, set_num, rep))
+                
+            self.connection.commit()
+            print("기록이 저장되었습니다.")
+            return True
+        except Error as e:
+            print(f"기록 저장 중 오류 발생: {e}")
+            return False
+        
+    def get_record(self, user_id):
+        try:
+            if self.connection is None:
+                print("Not connected.")
+                return False
+            
+            with self.connection.cursor() as cursor:
+                # 사용자 정보 조회
+                cursor.execute("SELECT name, height, weight FROM USER WHERE user_id = %s",
+                               (user_id,))
+                user = cursor.fetchall()
+                
+                # 운동 기록 조회
+                query = """
+                SELECT * FROM EXERCISE
+                WHERE user_id = %s
+                ORDER BY created_at DESC
+                LIMIT %s                
+                """
+                cursor.execute(query, (user_id,))
+                exercise = cursor.fetchall()
+                
+        except Error as e:
+            print(f"기록 저장 중 오류 발생: {e}")
+            return False
+        
+        
     def close(self):
         # 데이터베이스 연결 종료
         if self.connection:
