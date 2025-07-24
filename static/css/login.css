@@ -1,0 +1,62 @@
+.wrapper {
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+}
+
+.login-form {
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ebebeb;
+    padding: 2rem;
+    width: 568px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 2rem;
+}
+
+.input-group label {
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn {
+    font-size: 0.8rem;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    border: none;
+    border-radius: 16px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn:hover {
+    background-color: #444;
+    cursor: pointer;
+}
