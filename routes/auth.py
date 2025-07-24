@@ -17,7 +17,6 @@ def login():
         else: # DB에 이메일, 패스워드가 없을 때
             #flash()
             return redirect(url_for('/auth/login'))
-    return render_template('login.html')
 #         if user:
 #             session['email'] = email
 #             return redirect(url_for('DashBoard'))
