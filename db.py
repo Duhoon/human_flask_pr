@@ -24,3 +24,26 @@ class Database:
             print(f"MariaDB 연결 중 오류 발생: {e}")
     
     # TODO: DB 컨넥션 및 Model 관련 작업 필요
+    
+    def save_exer_record(self, weight, exercise_type, set_num, rep):
+        try:
+            if self.connection is None:
+                print("Not connected.")
+                return False
+            
+            with self.connection.cursor() as cursor:
+                query = """
+                INSERT INTO EXERCISE (exercise_type, set_num, reps)
+                VALUES (%s, %s, %s)
+                """
+                cursor.execute(query, (exercise_type, set_num, rep))
+                
+            self.connection.commit()
+            print("기록이 저장되었습니다.")
+            return True
+        except Error as e:
+            print(f"기록 저장 중 오류 발생: {e}")
+            return False
+        
+        
+        
