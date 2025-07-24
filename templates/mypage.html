@@ -179,17 +179,17 @@
     <div class="content">
       <div class="profile">
         <img src="https://via.placeholder.com/60" alt="Profile">
-        <div><strong>{{ record.userName }}</strong></div>
+        <div><strong>{{ record.email }}</strong></div>
       </div>
 
       <div class="inputs">
         <div>
           <label>Height</label><br>
-          <input type="text" placeholder="Value">
+          <input type="text" value="{{ record.heigth }}">
         </div>
         <div>
           <label>Weight</label><br>
-          <input type="text" placeholder="Value">
+          <input type="text"  value="{{ record.weigth }}">
         </div>
       </div>
 
@@ -204,34 +204,17 @@
         <button class="reset">Reset</button>
         <button class="save">Save</button>
       </div>
-
       <!-- 운동 기록 리스트 -->
-      <div class="log-entry">
-        <div class="log-date">Apr. 3. 2025</div>
-        <div class="log-type">Push-up</div>
-        <div class="log-details">
-          <div class="log-box"></div>
-          <div class="log-box"></div>
+    {% for record in record %}
+        <div class="log-entry">
+            <div class="log-date">{{ record.created_at }}</div>
+            <div class="log-type">{{record.exercise_type}}</div>
+            <div class="log-details">
+            <div class="log-box">{{ record.REPS }}</div>
+            <div class="log-box">{{ record.set_num }}</div>
+            </div>
         </div>
-      </div>
-
-      <div class="log-entry">
-        <div class="log-date">Apr. 3. 2025</div>
-        <div class="log-type">Push-up</div>
-        <div class="log-details">
-          <div class="log-box"></div>
-          <div class="log-box"></div>
-        </div>
-      </div>
-
-      <div class="log-entry">
-        <div class="log-date">Apr. 3. 2025</div>
-        <div class="log-type">Push-up</div>
-        <div class="log-details">
-          <div class="log-box"></div>
-          <div class="log-box"></div>
-        </div>
-      </div>
+    {% endfor %}
     </div>
   </div>
 
