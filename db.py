@@ -24,3 +24,9 @@ class Database:
             print(f"MariaDB 연결 중 오류 발생: {e}")
     
     # TODO: DB 컨넥션 및 Model 관련 작업 필요
+    
+    def close(self):
+        # 데이터베이스 연결 종료
+        if self.connection:
+            self.connection.close()
+            print("MariaDB 연결이 종료되었습니다.")
