@@ -25,6 +25,7 @@ class Database:
             print(f"MariaDB 연결 중 오류 발생: {e}")
     
     # TODO: DB 컨넥션 및 Model 관련 작업 필요
+<<<<<<< HEAD
     def create_account(self, email, password) -> bool:
         if self.connection is None: # DB에 연결이 없을 때,
             print("데이터 베이스 연결이 되지 않았습니다.")
@@ -48,3 +49,11 @@ class Database:
                 SELECT (email, password) FROM USER
                 """
 
+=======
+    
+    def close(self):
+        # 데이터베이스 연결 종료
+        if self.connection:
+            self.connection.close()
+            print("MariaDB 연결이 종료되었습니다.")
+>>>>>>> 34c7056e1f6d55c3b16928a76816d541bd3edbb7
