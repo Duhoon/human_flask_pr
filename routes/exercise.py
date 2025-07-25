@@ -5,7 +5,7 @@ db = Database()
 
 exercise_bp = Blueprint('exercise', __name__, url_prefix='/exercise')
 
-@exercise_bp.route('/workout')
+@exercise_bp.route('/mypage')
 def workout():
     # 마이페이지 조회
     records = db.get_mypage(id)
