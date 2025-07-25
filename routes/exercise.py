@@ -10,7 +10,7 @@ exercise_bp = Blueprint('exercise', __name__, url_prefix='/exercise')
 def mypage():
     # 마이페이지 조회
     records = db.get_mypage(id)
-    
+    profile = db.get_mypage_profile(id)
     # 최근 7일간 운동 종류별 누적 횟수
     summary = defaultdict(int)
     
@@ -21,7 +21,7 @@ def mypage():
         if ex_type:
             summary[ex_type] += reps
             
-    return render_template('mypage.html', record=records, summary = summary)
+    return render_template('mypage.html', record=records, summary = summary, profile=profile)
 
 @exercise_bp.route('/workout', methods=['GET'])
 def workout():

@@ -84,13 +84,12 @@ class Database:
                     SELECT 
                         A.ID
                         , A.password 
-                        , A.HEIGHT
-                        , A.WEIGHT
+                        , A.height
+                        , A.weight
                         , DATE_FORMAT(A.CREATED_AT, '%%Y-%%m-%%d')AS CREATED_AT
 	                    , DATE_FORMAT(A.UPDATED_AT, '%%Y-%%m-%%d')AS UPDATED_AT
                         , A.EMAIL
                         , B.exercise_type 
-                        , B.created_at 
                         , B.USER_ID
                         , B.set_num 
                         , B.REPS 
@@ -98,7 +97,7 @@ class Database:
                     LEFT JOIN exercise B
                         ON A.ID = B.user_id
                     WHERE A.ID = %s AND B.created_at >= NOW() - INTERVAL 7 DAY
-                    ORDER BY B.created_at DESC;
+                    ORDER BY B.created_at ,exercise_type DESC;
                 """
                 cursor.execute(query, (id,))
                 record = cursor.fetchall()
@@ -106,7 +105,31 @@ class Database:
         except Error as e:
             print(f"데이터 조회 중 오류 발생: {e}")
             return False
-    
+        
+        
+    def get_mypage_profile(self, id):
+        self.id = id
+        """마이페이지 조회"""
+        try:
+            if Database.connection is None:
+                print("데이터베이스 연결이 없습니다.")
+                return False
+                
+            with Database.connection.cursor() as cursor:
+                query = f"""
+                    SELECT 
+                        email, 
+                        weight,
+                        height
+                        FROM user
+                        where id = %s ;
+                    """
+                cursor.execute(query, (id,))
+                record = cursor.fetchall()[0]
+            return record
+        except Error as e:
+            print(f"데이터 조회 중 오류 발생: {e}")
+            return False
     
     def save_exer_record(self, weight, exercise_type, set_num, rep):
         try:
