@@ -24,7 +24,7 @@ def mypage():
     return render_template('mypage.html', record=records, summary = summary)
 
 @exercise_bp.route('/workout', methods=['GET'])
-def login_page():
+def workout():
     return render_template('workout.html')
 
 @exercise_bp.route('/save', methods=['POST'])
