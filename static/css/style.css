@@ -1,6 +1,10 @@
-/* 전체 바디 스타일 */
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #00dc64;
+  --black-color: #141414;
 }
 
 body {
@@ -9,6 +13,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   margin: 0;
+}
+
+@media screen and (max-width: 568) {
+  body {
+    padding: 1rem;
+  }
 }

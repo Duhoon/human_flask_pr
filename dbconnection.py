@@ -70,6 +70,7 @@ class Database:
             print(f"로그인 실패했습니다. {e}")
             return None
         
+
     def get_mypage(self, id):
         self.id = id
         """마이페이지 조회"""
@@ -79,14 +80,14 @@ class Database:
                 return False
                 
             with Database.connection.cursor() as cursor:
-                query = """
+                query = f"""
                     SELECT 
                         A.ID
                         , A.password 
                         , A.HEIGHT
                         , A.WEIGHT
-                        , DATE_FORMAT(A.CREATED_AT, '%Y-%m-%d')AS CREATED_AT
-	                    , DATE_FORMAT(A.UPDATED_AT, '%Y-%m-%d')AS UPDATED_AT
+                        , DATE_FORMAT(A.CREATED_AT, '%%Y-%%m-%%d')AS CREATED_AT
+	                    , DATE_FORMAT(A.UPDATED_AT, '%%Y-%%m-%%d')AS UPDATED_AT
                         , A.EMAIL
                         , B.exercise_type 
                         , B.created_at 
@@ -96,7 +97,8 @@ class Database:
                     FROM user A
                     LEFT JOIN exercise B
                         ON A.ID = B.user_id
-                    WHERE A.ID = %s
+                    WHERE A.ID = %s AND B.created_at >= NOW() - INTERVAL 7 DAY
+                    ORDER BY B.created_at DESC;
                 """
                 cursor.execute(query, (id,))
                 record = cursor.fetchall()
