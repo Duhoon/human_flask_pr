@@ -30,24 +30,26 @@ def mypage():
     
 @exercise_bp.route('/workout', methods=['GET'])
 def workout():
-    if session.get('id',None) == None: # 세션이 없으면
+    user_id = session.get('id', None)
+    if user_id == None: # 세션이 없으면
         return redirect(url_for('index'))
     return render_template('workout.html')
 
 @exercise_bp.route('/save', methods=['POST'])
-def record():
-    if session.get('id',None) == None: # 세션이 없으면,
+def save():
+    user_id = session.get('id',None)
+    if user_id == None: # 세션이 없으면,
         return redirect(url_for('index'))
     exercise_type = request.form.get('exercise_type')
     set_num = request.form.get('set')
     rep_num = request.form.get('rep')
     
-    print(db.save_exer_record(exercise_type,set_num,rep_num))
-    if db.save_exer_record(exercise_type, set_num, rep_num): # 성공적으로 값이 들어갈 때,
-        redirect(url_for('mypage')) # 성공적으로 값이 들어가면, redirect -> mypage
+    if db.save_exer_record(user_id, exercise_type, set_num, rep_num): # 성공적으로 값이 들어갈 때,
+        return redirect(url_for('exercise.mypage')) # 성공적으로 값이 들어가면, redirect -> mypage
     else:
         print(f"운동 이력 작성 중 문제 발생")
-        
+        return redirect(url_for('exercise.workout')) 
+    
 def daily_exercise():
     # 마이페이지 조회
     records = db.get_mypage(id)

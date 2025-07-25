@@ -128,13 +128,12 @@ class Database:
                     """
                 cursor.execute(query, (id,))
                 record = cursor.fetchone()
-                print(f"{record}sadfasdf")
             return record
         except Error as e:
             print(f"데이터 조회 중 오류 발생: {e}")
             return False
     
-    def save_exer_record(self, weight, exercise_type, set_num, rep):
+    def save_exer_record(self, user_id, exercise_type, set_num, rep):
         try:
             if Database.connection is None:
                 print("Not connected.")
@@ -142,10 +141,10 @@ class Database:
             
             with Database.connection.cursor() as cursor:
                 query = """
-                INSERT INTO exercise (exercise_type, set_num, reps)
-                VALUES (%s, %s, %s)
+                INSERT INTO exercise (user_id, exercise_type, set_num, reps)
+                VALUES (%s, %s, %s, %s)
                 """
-                cursor.execute(query, (exercise_type, set_num, rep))
+                cursor.execute(query, (user_id, exercise_type, set_num, rep))
                 
             Database.connection.commit()
             print("기록이 저장되었습니다.")
