@@ -11,12 +11,12 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         if {"email":email, "password":password} in db.read_user_list(): # DB에 이메일, 패스워드가 매칭됐을 때
-            print(db.select_id_for_session(email))
             session['id'] = db.select_id_for_session(email)
-            return render_template_string("성공")
+            return render_template('test.html', session = session['id'])  # 수정 (User[id]에 대한 세션값을 반환할 수 있도록)
         else: # DB에 이메일, 패스워드가 없을 때
             #flash()
-            return redirect(url_for('/auth/login'))
+            return redirect(url_for('index'))
+            
 #         if user:
 #             session['email'] = email
 #             return redirect(url_for('DashBoard'))
@@ -29,6 +29,11 @@ def login():
 # @app.route("/DashBoard")
 # def DashBoard():
 #     return render_template('DashBoard.html')
+@auth_bp.route("/test", methods=['GET'])
+def test(): # Session값 출력 페이지 (테스트)
+    session.get("id", "No Session")
+    return redirect(url_for('/auth/test'))
+
 
 @auth_bp.route("/signup",methods = ['GET','POST'])
 def SignUp(): # 회원가입 
