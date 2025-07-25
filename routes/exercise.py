@@ -37,3 +37,48 @@ def record():
         redirect(url_for('mypage'))
     else:
         print(f"운동 이력 작성 중 문제 발생")
+        
+def daily_exercise():
+    # 마이페이지 조회
+    records = db.get_mypage(id)
+    
+    # 중첩 딕셔너리: 날짜 → 운동 → 반복수 누적
+    daily_summary = defaultdict(lambda: defaultdict(int))
+
+    for record in records:
+        date = record.get("created_at")
+        if date is None:
+            continue
+
+        date_str = date.strftime('%Y-%m-%d')  # 날짜 문자열로 정제
+        ex_type = record.get("exercise_type")
+        reps = record.get("REPS", 0)
+
+        if ex_type:
+            daily_summary[date_str][ex_type] += reps
+            
+def daily_exercise_type():
+    # 마이페이지 조회
+    records = db.get_mypage(id)
+    
+    # 중첩 딕셔너리: 날짜 → 운동 → 반복수 누적
+    ex_type_summary = defaultdict(lambda: defaultdict(int))
+
+    for record in records:
+        ex_type = record.get("exercise_type")
+        
+        if ex_type is None:
+            continue
+
+        date = record.get("created_at")
+        date_str = date.strftime('%Y-%m-%d')  # 날짜 문자열로 정제
+        reps = record.get("REPS", 0)
+
+        if date_str:
+            ex_type_summary[ex_type][date_str] += reps
+        
+
+@exercise_bp.route('/', methods=['GET'])
+def login_page():
+    return render_template('mypage.html')
+
