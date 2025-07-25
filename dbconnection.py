@@ -128,7 +128,6 @@ class Database:
                     """
                 cursor.execute(query, (id,))
                 record = cursor.fetchone()
-                print(f"{record}sadfasdf")
             return record
         except Error as e:
             print(f"데이터 조회 중 오류 발생: {e}")
