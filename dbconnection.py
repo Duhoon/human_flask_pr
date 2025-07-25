@@ -109,6 +109,7 @@ class Database:
         
     def get_mypage_profile(self, id):
         self.id = id
+        
         """마이페이지 조회"""
         try:
             if Database.connection is None:
@@ -122,10 +123,12 @@ class Database:
                         weight,
                         height
                         FROM user
-                        where id = %s ;
+                        where id = %s 
+                        ;
                     """
                 cursor.execute(query, (id,))
-                record = cursor.fetchall()[0]
+                record = cursor.fetchone()
+                print(f"{record}sadfasdf")
             return record
         except Error as e:
             print(f"데이터 조회 중 오류 발생: {e}")
