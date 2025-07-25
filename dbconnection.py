@@ -89,6 +89,7 @@ class Database:
                         , DATE_FORMAT(A.CREATED_AT, '%%Y-%%m-%%d')AS CREATED_AT
 	                    , DATE_FORMAT(A.UPDATED_AT, '%%Y-%%m-%%d')AS UPDATED_AT
                         , A.EMAIL
+                        , B.created_at
                         , B.exercise_type 
                         , B.USER_ID
                         , B.set_num 
@@ -97,7 +98,7 @@ class Database:
                     LEFT JOIN exercise B
                         ON A.ID = B.user_id
                     WHERE A.ID = %s AND B.created_at >= NOW() - INTERVAL 7 DAY
-                    ORDER BY B.created_at ,exercise_type DESC;
+                    ORDER BY B.created_at DESC;
                 """
                 cursor.execute(query, (id,))
                 record = cursor.fetchall()
@@ -170,7 +171,7 @@ class Database:
                 SELECT * FROM exercise
                 WHERE user_id = %s
                 ORDER BY created_at DESC
-                LIMIT %s                
+                LIMIT %s
                 """
                 cursor.execute(query, (user_id,))
                 exercise = cursor.fetchall()

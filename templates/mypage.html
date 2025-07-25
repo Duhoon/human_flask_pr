@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/swiper.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/apexcharts.css') }}">
 </head>
 <body>
@@ -41,14 +40,7 @@
 
       <div class="graph-section">
         <div class="swiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide"><div id="chart"></div></div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+          <div id="chart"></div>
         </div>
       </div>
     </div>
@@ -67,42 +59,15 @@
   </div>
   </div>
 </body>
-<script type="text/javascript" src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/apexcharts.min.js') }}"></script>
 <script type="text/javascript">
-  const swiper = new Swiper('.swiper', {
-    // Optional parameters
-    direction: 'vertical',
-    loop: true,
-
-    // If we need pagination
-    pagination: {
-      el: '.swiper-pagination',
-    },
-
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-
-    // And if we need scrollbar
-    scrollbar: {
-      el: '.swiper-scrollbar',
-    },
-
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    }
-  });
-</script>
-<script type="text/javascript">
   var options = {
-    series: [{
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-  }],
+    series: [
+      {
+        name: 'total',
+        data: {{data | safe}}
+      }
+    ],
     chart: {
     height: 300,
     type: 'line',
@@ -127,7 +92,7 @@
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: {{axis | safe}},
   }
   };
 

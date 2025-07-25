@@ -12,9 +12,10 @@ def login():
         password = request.form.get('password')
         if {"email":email, "password":password} in db.read_user_list(): # DB에 이메일, 패스워드가 매칭됐을 때
             session['id'] = db.select_id_for_session(email)
-            return render_template('test.html', session = session['id'])  # 수정 (User[id]에 대한 세션값을 반환할 수 있도록)
+            return redirect(url_for('exercise.mypage'))  # 수정 (User[id]에 대한 세션값을 반환할 수 있도록)
         else: # DB에 이메일, 패스워드가 없을 때
             #flash()
+            print("문제 발생")
             return redirect(url_for('index'))
             
 #         if user:

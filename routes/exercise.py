@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, render_template_string, Blueprint
 from dbconnection import Database
 from collections import defaultdict
+import json
 
 db = Database()
 
@@ -24,7 +25,11 @@ def mypage():
             if ex_type:
                 summary[ex_type] += reps
                 
-        return render_template('mypage.html', record=records, summary = summary, profile=profile)
+        total = total_nums(records)
+                
+        print(json.dumps(list( total.keys() )))
+        print(json.dumps(list( total.values() )))
+        return render_template('mypage.html', record=records, summary = summary, profile=profile, axis=json.dumps(list(total.keys())), data=json.dumps(list(total.values())))
     else:
         return redirect(url_for('index'))
     
@@ -69,10 +74,7 @@ def daily_exercise():
         if ex_type:
             daily_summary[date_str][ex_type] += reps
             
-def daily_exercise_type():
-    # 마이페이지 조회
-    records = db.get_mypage(id)
-    
+def daily_exercise_type(records):
     # 중첩 딕셔너리: 날짜 → 운동 → 반복수 누적
     ex_type_summary = defaultdict(lambda: defaultdict(int))
 
@@ -88,7 +90,30 @@ def daily_exercise_type():
 
         if date_str:
             ex_type_summary[ex_type][date_str] += reps
+    
+    return ex_type_summary
+
+def total_nums(records):
+    # 중첩 딕셔너리: 날짜 → 운동 → 반복수 누적
+    total = {}
+
+    for record in records:
+        ex_type = record.get("exercise_type")
         
+        if ex_type is None:
+            continue
+
+        date = record.get("created_at")
+        date_str = date.strftime('%Y-%m-%d')  # 날짜 문자열로 정제
+        set_num = int(record.get("set_num"))
+        reps = int(record.get("REPS", 0))
+
+        if total.get(date_str):
+            total[date_str] += set_num * reps
+        else :
+            total[date_str] = set_num * reps
+    
+    return total
 
 @exercise_bp.route('/', methods=['GET'])
 def login_page():
