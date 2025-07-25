@@ -11,7 +11,6 @@ def mypage():
     # 마이페이지 조회
     # 해당되는 유저 id 로그인이 되어있어야 mypage로 갈 수 있게,
     id_now = session.get('id',None)
-    print("sadfasdfdsafasdf")
     if id_now:
         records = db.get_mypage(id_now)
         profile = db.get_mypage_profile(id_now)
