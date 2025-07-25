@@ -4,139 +4,45 @@
     <meta charset="UTF-8">
     <title>운동 기록 입력</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 1rem;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            flex: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 5rem;
-        }
-
-        .tabs a {
-            padding: 1rem;
-            flex: 1;
-            text-align: center;
-            text-decoration: none;
-            color: #666;
-            font-weight: bold;
-        }
-
-        .tabs a.active {
-            border-bottom: 2px solid #000;
-            color: #000;
-        }
-
-        form {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-            margin: 0 auto;
-        }
-
-        form > div {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        select, input {
-            width: 100%;
-            padding: 0.8rem;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: space-between;
-        }
-
-        .button-group button {
-            flex: 1;
-            padding: 0.8rem;
-            font-size: 1rem;
-            border-radius: 6px;
-            border: none;
-        }
-
-        .reset-btn {
-            background-color: #fff;
-            border: 1px solid #000;
-            color: #000;
-        }
-
-        .save-btn {
-            background-color: #222;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/workout.css') }}">
 </head>
 <body>
-    <div class="tabs">
-        <a href="/mypage">My</a>
-        <a href="/workout" class="active">Work out</a>
-    </div>
+    <div class="wrapper">
+        <div class="tabs">
+            <a href="/exercise/mypage">My</a>
+            <a href="/exercise/workout" class="active">Work out</a>
+        </div>
 
-    <div class="container">
-        <form action="/workout/save" method="post">
-            <div>
-                <label for="type">운동 종류</label>
-                <select id="type" name="type" required>
-                    <option value="">Push-up, Sit-up, Pull-up, Squat</option>
-                    <option value="pushup">Push-up</option>
-                    <option value="situp">Sit-up</option>
-                    <option value="pullup">Pull-up</option>
-                    <option value="squat">Squat</option>
-                </select>
-            </div>
+        <div class="container">
+            <form action="/workout/save" method="post">
+                <div>
+                    <label for="type">운동 종류</label>
+                    <select id="type" name="type" required>
+                        <option value="">Push-up, Sit-up, Pull-up, Squat</option>
+                        <option value="pushup">Push-up</option>
+                        <option value="situp">Sit-up</option>
+                        <option value="pullup">Pull-up</option>
+                        <option value="squat">Squat</option>
+                    </select>
+                </div>
 
-            <div>
-                <label for="set">세트</label>
-                <input type="number" name="set" id="set" placeholder="몇 번째 세트인가요?" required>
-            </div>
+                <div>
+                    <label for="set">세트</label>
+                    <input type="number" name="set" id="set" placeholder="몇 번째 세트인가요?" required>
+                </div>
 
-            <div>
-                <label for="rep">반복 횟수</label>
-                <input type="number" name="rep" id="rep" placeholder="몇 번 반복하셨나요?" required>
-            </div>
+                <div>
+                    <label for="rep">반복 횟수</label>
+                    <input type="number" name="rep" id="rep" placeholder="몇 번 반복하셨나요?" required>
+                </div>
 
-            <div class="button-group">
-                <button type="submit" class="save-btn">Save</button>
-                <button type="reset" class="reset-btn">Reset</button>
-            </div>
-        </form>
+                <div class="button-group">
+                    <button type="submit" class="save-btn">Save</button>
+                    <button type="reset" class="reset-btn">Reset</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
