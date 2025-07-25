@@ -92,6 +92,7 @@ class Database:
                         , B.exercise_type 
                         , B.USER_ID
                         , B.set_num 
+                        , B.created_at 
                         , B.REPS 
                     FROM user A
                     LEFT JOIN exercise B
