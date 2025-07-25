@@ -13,7 +13,7 @@ def mypage():
     id_now = session.get('id',None)
     if id_now:
         records = db.get_mypage(id_now)
-        
+        profile = db.get_mypage_profile(id)
         # 최근 7일간 운동 종류별 누적 횟수
         summary = defaultdict(int)
         
@@ -24,7 +24,7 @@ def mypage():
             if ex_type:
                 summary[ex_type] += reps
                 
-        return render_template('mypage.html', record=records, summary = summary)
+        return render_template('mypage.html', record=records, summary = summary, profile=profile)
     else:
         return redirect(url_for('index'))
     
