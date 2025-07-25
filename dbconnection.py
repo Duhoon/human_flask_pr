@@ -23,7 +23,7 @@ class Database:
             print(f"MariaDB 연결 중 오류 발생: {e}")
     
     # TODO: DB 컨넥션 및 Model 관련 작업 필요
-    def create_account(self, email, password) -> bool:
+    def create_account(self, email, password) -> bool: # Sign Up 페이지에서 이메일과 패스워드를 만들 때, 성공과 실패에 대한 Bool 결과값 반환
         if Database.connection is None: # DB에 연결이 없을 때,
             return False, "데이터 베이스 연결이 되지 않았습니다."
         try:
@@ -40,14 +40,14 @@ class Database:
             return False, f"알 수 없는 오류 발생: {e}" 
     
     # Read Account List
-    def read_user_list(self):
+    def read_user_list(self): # 로그인에 필요한 데이터 목록들을 불러오는 메소드
         try:
             if Database.connection is None: # 연결이 되지 않았을 때,
                 print("데이터 베이스 연결이 되지 않았습니다.")
                 return []
             with Database.connection.cursor() as c:
                 query = """
-                    SELECT email, password FROM USER
+                    SELECT email, password FROM user
                     """
                 c.execute(query)
                 return c.fetchall()
@@ -62,14 +62,14 @@ class Database:
                 return None
             with Database.connection.cursor() as c:
                 query = """
-                        SELECT id FROM USER WHERE email = %s
+                        SELECT id FROM user WHERE email = %s
                         """
                 c.execute(query, (email,))
-                print(type(c.fetchone()['id']))
                 return c.fetchone()['id']
         except Error as e:
             print(f"로그인 실패했습니다. {e}")
             return None
+        
 
     def get_mypage(self, id):
         self.id = id
@@ -139,7 +139,7 @@ class Database:
             
             with Database.connection.cursor() as cursor:
                 query = """
-                INSERT INTO EXERCISE (exercise_type, set_num, reps)
+                INSERT INTO exercise (exercise_type, set_num, reps)
                 VALUES (%s, %s, %s)
                 """
                 cursor.execute(query, (exercise_type, set_num, rep))
@@ -159,13 +159,13 @@ class Database:
             
             with Database.connection.cursor() as cursor:
                 # 사용자 정보 조회
-                cursor.execute("SELECT name, height, weight FROM USER WHERE user_id = %s",
+                cursor.execute("SELECT name, height, weight FROM user WHERE user_id = %s",
                                (user_id,))
                 user = cursor.fetchall()
                 
                 # 운동 기록 조회
                 query = """
-                SELECT * FROM EXERCISE
+                SELECT * FROM exercise
                 WHERE user_id = %s
                 ORDER BY created_at DESC
                 LIMIT %s                
