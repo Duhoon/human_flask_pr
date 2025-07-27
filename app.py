@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, render_template_string, current_app
-import atexit
 from dotenv import load_dotenv
+load_dotenv() # .env 파일 환경설정 불러오기
+
+from flask import Flask, render_template, request, redirect, url_for, session, flash, render_template_string, current_app
 from routes.auth import auth_bp
 from routes.exercise import exercise_bp
-
-load_dotenv() # .env 파일 환경설정 불러오기
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
